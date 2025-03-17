@@ -31,9 +31,11 @@
   },
   "scripts": {
     "start": "cds-serve",
+    "build-ts": "npx tsc",
     "watch": "cds-tsx w",
-    "watch-edu-flow-ui": "cds watch --open eduflowui/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "undeploy": "cf undeploy edu-flow --delete-services --delete-service-keys --delete-service-brokers",
+    "watch-vendor-portal-ui": "cds watch --open com.ndbs.vendorportalui/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-customer-portal-ui": "cds watch --open com.ndbs.customerportalui/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy green-token-portal --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
