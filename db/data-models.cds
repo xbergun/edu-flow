@@ -7,28 +7,28 @@ type UserRole : String enum {
 
 entity ApplicationUsers : managed {
         key ID            : UUID;
-            auth0_id      : String(255);
+            auth0_ID      : String(255);
             fullName      : String(100);
             email         : String(255);
-            role          : UserRole;
+            role          : UserRole default #Student;
             studentNumber : String(20);
             to_Department : Association to Departments;
 }
 
 entity Departments {
-        key ID      : UUID;
-            name    : String(100);
-            maxAkts : Integer;
+        key ID         : UUID;
+            name       : String(100);
+            maxCredits : Integer;
 }
 
-entity Courses {
+entity Courses : managed {
         key ID           : UUID;
             name         : String(100);
-            akts         : Integer;
-            capacity     : Integer;
-            absenceLimit : Integer;
-            department   : Association to Departments;
-            teacher      : Association to ApplicationUsers;
+            credits      : Integer default 3;
+            capacity     : Integer default 30;
+            absenceLimit : Integer default 4;
+            to_Department   : Association to Departments;
+            to_Teacher      : Association to ApplicationUsers;
 }
 
 entity StudentCourses {

@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="eduflowui.controller.Home"
+    controllerName="eduflowui.controller.Student"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     xmlns="sap.m"
@@ -16,16 +16,16 @@
         >
             <VBox width="95%">
                 <smartFilterBar:SmartFilterBar
-                    id="sfbPurchaseOrders"
+                    id="sfbStudents"
                     entitySet="Users"
                     showGoOnFB="true"
                     enableBasicSearch="true"
                 />
                 <smartTable:SmartTable
-                    id="stPurchaseOrders"
+                    id="stStudents"
                     entitySet="Users"
                     tableType="Table"
-                    smartFilterId="sfbPurchaseOrders"
+                    smartFilterId="sfbStudents"
                     header="{i18n>orders}"
                     enableAutoBinding="true"
                     class="sapUiResponsiveContentPadding"
@@ -51,7 +51,7 @@
                         </OverflowToolbar>
                     </smartTable:customToolbar>
                     <Table
-                        id="tblPurchaseOrders"
+                        id="tblStudents"
                         sticky="ColumnHeaders,HeaderToolbar"
                         mode="MultiSelect"
                         growing="true"

@@ -1,4 +1,5 @@
 import { ApplicationService } from "@sap/cds";
+import { getCourses } from "./lib/handlers/courses.handler";
 
 export default class GreenTokenPortalService extends ApplicationService {
     async init(): Promise<void> {
@@ -10,6 +11,8 @@ export default class GreenTokenPortalService extends ApplicationService {
         /* ======================================================================================================================= */
         /* On Handling                                                                                                             */
         /* ======================================================================================================================= */
+
+        this.on("READ", "Courses", getCourses);
 
         /* ======================================================================================================================= */
         /* After Handling                                                                                                          */

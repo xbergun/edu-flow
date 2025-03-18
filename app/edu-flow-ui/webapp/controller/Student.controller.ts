@@ -4,7 +4,7 @@ import BaseController from "./BaseController";
 /**
  * @namespace eduflowui.controller
  */
-export default class App extends BaseController {
+export default class Student extends BaseController {
 
     /*eslint-disable @typescript-eslint/no-empty-function*/
     public onInit(): void {

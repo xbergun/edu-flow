@@ -93,17 +93,39 @@
       },
       "routes": [
         {
-          "name": "RouteHome",
+          "name": "RouteLogin",
           "pattern": ":?query:",
           "target": [
-            "TargetHome"
+            "TargetLogin"
+          ]
+        },
+        {
+          "name": "RouteStudent",
+          "pattern": "student",
+          "target": [
+            "RouteStudent"
+          ]
+        },
+        {
+          "name": "RouteCourses",
+          "pattern": "courses",
+          "target": [
+            "RouteCourses"
           ]
         }
       ],
       "targets": {
-        "TargetHome": {
-          "id": "Home",
-          "name": "Home"
+        "TargetLogin": {
+          "id": "Login",
+          "name": "Login"
+        },
+        "RouteStudent": {
+          "id": "Student",
+          "name": "Student"
+        },
+        "RouteCourses": {
+          "id": "Courses",
+          "name": "Courses"
         }
       }
     },
