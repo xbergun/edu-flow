@@ -10,7 +10,7 @@ import View from "sap/ui/core/mvc/View";
 import Component from "../Component";
 
 /**
- * @namespace com.ndbs.customerportalui.controller
+ * @namespace eduflowui.controller
  */export default class BaseController extends Controller {
 
     /* ======================================================================================================================= */

@@ -12,7 +12,7 @@ export default class GreenTokenPortalService extends ApplicationService {
         /* On Handling                                                                                                             */
         /* ======================================================================================================================= */
 
-        this.on("READ", "Courses", getCourses);
+        //this.on("READ", "Courses", getCourses);
 
         /* ======================================================================================================================= */
         /* After Handling                                                                                                          */

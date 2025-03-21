@@ -14,3 +14,31 @@ annotate ef.Users with @UI :{
         email
     ],
 };
+
+annotate ef.Departments with @UI :{
+    LineItem       : [
+        {Value: name},
+        {Value: maxCredits},
+    ],
+    SelectionFields: [
+        name,
+        maxCredits
+    ],
+};
+
+annotate ef.Courses with @UI :{
+    LineItem       : [
+        {Value: name},
+        {Value: credits},
+        {Value: capacity},
+        {Value: absenceLimit},
+        {Value: createdBy},
+        {Value: createdAt},
+    ],
+    SelectionFields: [
+        name,
+        credits,
+        capacity,
+        absenceLimit
+    ],
+};

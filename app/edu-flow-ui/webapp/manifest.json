@@ -112,6 +112,13 @@
           "target": [
             "RouteCourses"
           ]
+        },
+        {
+          "name": "RouteCourseDetail",
+          "pattern": "details/{courseId}/name/{courseName}",
+          "target": [
+            "RouteCourseDetail"
+          ]
         }
       ],
       "targets": {
@@ -126,6 +133,10 @@
         "RouteCourses": {
           "id": "Courses",
           "name": "Courses"
+        },
+        "RouteCourseDetail": {
+          "id": "CourseDetail",
+          "name": "CourseDetail"
         }
       }
     },

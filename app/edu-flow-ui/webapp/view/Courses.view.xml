@@ -8,7 +8,8 @@
 >
     <Page
         id="idPageCourses"
-        title="{i18n>title}"
+        title="{i18n>courses}"
+        titleAlignment="Center"
     >
         <FlexBox
             justifyContent="Center"
@@ -17,7 +18,7 @@
             <VBox width="95%">
                 <smartFilterBar:SmartFilterBar
                     id="sfbCourses"
-                    entitySet="Users"
+                    entitySet="Courses"
                     showGoOnFB="true"
                     enableBasicSearch="true"
                 />
@@ -26,27 +27,26 @@
                     entitySet="Courses"
                     tableType="Table"
                     smartFilterId="sfbCourses"
-                    header="{i18n>orders}"
+                    header="{i18n>courses}"
                     enableAutoBinding="true"
                     class="sapUiResponsiveContentPadding"
                     enableExport="true"
                     beforeExport="onSmartTableBeforeExport"
                     enableCopy="false"
                     showFullScreenButton="true"
-                    requestAtLeastFields="Status"
                 >
                     <smartTable:customToolbar>
                         <OverflowToolbar design="Transparent">
                             <ToolbarSpacer />
                             <Button
-                                text="{i18n>approveButtonText}"
+                                text="{i18n>newCourseButtonText}"
                                 type="Accept"
-                                press="onApproveButtonPress"
+                                press="onAddCourseButtonPress"
                             />
                             <Button
-                                text="{i18n>rejectButtonText}"
+                                text="{i18n>deleteCourseButtonText}"
                                 type="Reject"
-                                press="onRejectButtonPress"
+                                press="onDeleteCourseButtonPress"
                             />
                         </OverflowToolbar>
                     </smartTable:customToolbar>
@@ -57,7 +57,15 @@
                         growing="true"
                         growingThreshold="100"
                     >
+                      <items>
+                            <ColumnListItem
+                                type="Navigation"
+                                press="onColumnListItemPress"
+                            >
+                            </ColumnListItem>
+                        </items>
                     </Table>
+                    
                 </smartTable:SmartTable>
             </VBox>
         </FlexBox>
