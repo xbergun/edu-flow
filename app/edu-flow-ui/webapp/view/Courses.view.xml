@@ -51,7 +51,7 @@
                         </OverflowToolbar>
                     </smartTable:customToolbar>
                     <Table
-                        id="tblCourses"
+                        id="idCoursesTable"
                         sticky="ColumnHeaders,HeaderToolbar"
                         mode="MultiSelect"
                         growing="true"

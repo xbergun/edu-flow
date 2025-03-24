@@ -7,21 +7,23 @@ import Event from "sap/ui/base/Event";
 import Context from "sap/ui/model/Context";
 import ListItemBase, { ListItemBase$PressEventParameters } from "sap/m/ListItemBase";
 import ColumnListItem from "sap/m/ColumnListItem";
-
+import ODataModel from "sap/ui/model/odata/v2/ODataModel";
+import MessageToast from "sap/m/MessageToast";
+import DeleteHelper from "eduflowui/utils/odata_helpers/DeleteHelper";
+import Component from "../Component";
 /**
  * @namespace eduflowui.controller
  */
 export default class Courses extends BaseController {
     private dialogBuilder!: DialogBuilder;
+    private oDataDeleteHelper!: DeleteHelper;
 
     /*eslint-disable @typescript-eslint/no-empty-function*/
     public onInit(): void {
+        const model = (this.getOwnerComponent() as Component).getModel() as ODataModel;
         const view = this.getCurrentView();
         this.dialogBuilder = new DialogBuilder(view);
-    }
-
-    public onAddCourseButtonPress(): void {
-        this.dialogBuilder.addNewCourseDialog();
+        this.oDataDeleteHelper = new DeleteHelper(model);
     }
 
     public onColumnListItemPress(event: Event<ListItemBase$PressEventParameters, ColumnListItem>) {
@@ -32,4 +34,44 @@ export default class Courses extends BaseController {
             courseName: courseParams.name
         });
     }
+
+    public async onAddCourseButtonPress(): Promise<void> {
+        const formData = await this.dialogBuilder.addNewCourseDialog();
+    
+        if (!formData) {
+            return;
+        }
+    
+        try {
+            const oDataModel = this.getCurrentView().getModel() as ODataModel;
+    
+            await new Promise<void>((resolve, reject) => {
+                oDataModel.create("/Courses", formData, {
+                    success: () => {
+                        MessageToast.show("Course created successfully.");
+                        oDataModel.refresh(true);
+                        resolve();
+                    },
+                    error: (err:any) => {
+                        MessageToast.show("Error creating course.");
+                        console.error(err);
+                        reject(err);
+                    }
+                });
+            });
+    
+        } catch (error) {
+            console.error("Unexpected error while creating course:", error);
+        }
+    }
+
+    public async onDeleteCourseButtonPress (event: Event): Promise<void> {
+        const table = this.getCurrentView().byId("idCoursesTable") as Table;
+        try {
+            await this.oDataDeleteHelper.deleteCourses(table);
+        } catch (error) {
+            console.error("Error deleting product species:", error);
+        }
+    }
 }
+    

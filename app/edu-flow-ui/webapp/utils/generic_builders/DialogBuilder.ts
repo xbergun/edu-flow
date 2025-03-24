@@ -14,7 +14,10 @@ import Label from "sap/m/Label";
 import Group from "sap/ui/comp/smartform/Group";
 import GroupElement from "sap/ui/comp/smartform/GroupElement";
 import JSONModel from "sap/ui/model/json/JSONModel";
-
+import MessageToast from "sap/m/MessageToast";
+import ColumnLayout from "sap/ui/comp/smartform/ColumnLayout";
+import { ICourses } from './../../types/courses.types';
+import SmartformBuilder from "./SmartformBuilder";
 
 
 /**
@@ -22,13 +25,14 @@ import JSONModel from "sap/ui/model/json/JSONModel";
  */
 
 export default class DialogBuilder extends ManagedObject {
-    private static locationTypeDialog: Dialog | null = null;
-    private static mapDialog: Dialog | null = null;
     private view: View;
+    private model: ODataModel;
+    private smartFormBuilder: SmartformBuilder;
 
     constructor(view: View) {
         super();
         this.view = view;
+        this.smartFormBuilder = new SmartformBuilder(view,this.model);
     }
 
 
@@ -44,33 +48,17 @@ export default class DialogBuilder extends ManagedObject {
         });
     }
 
-    public addNewCourseDialog(): Promise<{ CourseName: string; Description: string } | null> {
+    public addNewCourseDialog(): Promise<ICourses | null> {
         return new Promise((resolve) => {
-            const smartForm = new SmartForm({
-                editable: true,
-                groups: [
-                    new Group({
-                        groupElements: [
-                            new GroupElement({
-                                elements: [
-                                    new SmartField({ value: "{Name}", editable: true })
-                                ]
-                            }),
-                            new GroupElement({
-                                elements: [
-                                    new SmartField({ value: "{Credits}", editable: true })
-                                ]
-                            }),
-                            new GroupElement({
-                                elements: [
-                                    new SmartField({ value: "{Capacity}", editable: true })
-                                ]
-                            }),
-                        ]
-                    })
-                ]
-
-            });
+    
+            const tempModel = new JSONModel({
+                name: "",
+                credits: 0,
+                capacity: 0,
+                absenceLimit: 0
+            });    
+            
+            const smartForm = this.smartFormBuilder.buildNewCourseForm(tempModel);
 
             const dialog = new Dialog({
                 title: "Add New Course",
@@ -79,11 +67,10 @@ export default class DialogBuilder extends ManagedObject {
                 beginButton: new Button({
                     text: "Add",
                     press: () => {
-                        const model = smartForm.getModel() as JSONModel;
-                        const formData = model.getData();
-
-                        if (!formData?.CourseName || !formData?.Description) {
-                            MessageBox.error("All fields are required.");
+                        const formData = tempModel.getData();
+    
+                        if (!formData?.name) {
+                            MessageToast.show("All fields are required.");
                             return;
                         }
                         dialog.close();
@@ -98,10 +85,12 @@ export default class DialogBuilder extends ManagedObject {
                     }
                 })
             });
+    
             this.view.addDependent(dialog);
             dialog.open();
         });
     }
+    
 
 
 

@@ -3,6 +3,7 @@ ID: edu-flow
 version: 1.0.0
 description: "A simple CAP project."
 parameters:
+  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
@@ -18,36 +19,25 @@ modules:
     parameters:
       instances: 1
       buildpack: nodejs_buildpack
+      readiness-health-check-http-endpoint: /health
+      readiness-health-check-type: http
     build-parameters:
-      builder: npm-ci
+      builder: npm
+      ignore:
+        - default-env.json
+        - .env
+        - '**/*.ts'
+        - srv/**/*.ts
+        - srv/lib/**/*.ts
     provides:
-      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+      - name: srv-api
         properties:
           srv-url: ${default-url}
     requires:
-      - name: edu-flow-auth
       - name: edu-flow-db
-
-  - name: edu-flow
-    type: approuter.nodejs
-    path: app/
-    parameters:
-      keep-existing-routes: true
-      disk-quota: 256M
-      memory: 256M
-    requires:
-      - name: srv-api
-        group: destinations
-        properties:
-          name: srv-api # must be used in xs-app.json as well
-          url: ~{srv-url}
-          forwardAuthToken: true
       - name: edu-flow-auth
-    provides:
-      - name: app-api
-        properties:
-          app-protocol: ${protocol}
-          app-uri: ${default-uri}
+      - name: edu-flow-destination
+      - name: edu-flow-connectivity
 
   - name: edu-flow-db-deployer
     type: hdb
@@ -57,18 +47,110 @@ modules:
     requires:
       - name: edu-flow-db
 
-resources:
-  - name: edu-flow-auth
-    type: org.cloudfoundry.managed-service
+  - name: edu-flow
+    type: approuter.nodejs
+    path: app
     parameters:
-      service: xsuaa
-      service-plan: application
-      path: ./xs-security.json
-      config:
-        xsappname: edu-flow-${org}-${space}
-        tenant-mode: dedicated
+      keep-existing-routes: true
+      disk-quota: 512M
+      memory: 512M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: backend-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: edu-flow-auth
+      - name: edu-flow-destination
+      - name: edu-flow-runtime
+
+  - name: edu-flow-ui-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: edu-flow-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - eduflowui.zip
+          name: eduflowui
+          target-path: resources/
+
+  - name: eduflowui
+    type: html5
+    path: app/edu-flow-ui
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+
+resources:
   - name: edu-flow-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
       service-plan: hdi-shared
+
+  - name: edu-flow-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+
+  - name: edu-flow-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Description: CAP Backend OData Service Destination
+                HTML5.DynamicDestination: true
+                HTML5.Timeout: 300000
+                Name: backend-api
+                ProxyType: Internet
+                Type: HTTP
+                URL: ~{srv-api/srv-url}
+              - Authentication: NoAuthentication
+                Description: UI5 Library Destination
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+        service: destination
+        service-name: edu-flow-destination
+        service-plan: lite
+        version: 1.0.0
+      service: destination
+      service-plan: lite
+    requires:
+      - name: srv-api
+
+  - name: edu-flow-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+
+  - name: edu-flow-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  - name: edu-flow-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime

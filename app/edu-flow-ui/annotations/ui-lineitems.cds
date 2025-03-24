@@ -1,6 +1,13 @@
 using {EduFlowService as ef} from '../../../srv/data-provider';
 
 
+
+annotate ef.Users with {
+    to_Department @UI.HiddenFilter;
+} ;
+
+
+
 annotate ef.Users with @UI :{
     LineItem       : [
         {Value: fullName},
@@ -12,7 +19,7 @@ annotate ef.Users with @UI :{
     SelectionFields: [
         fullName,
         email
-    ],
+    ]
 };
 
 annotate ef.Departments with @UI :{
