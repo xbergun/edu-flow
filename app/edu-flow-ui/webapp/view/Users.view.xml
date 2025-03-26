@@ -8,7 +8,7 @@
 >
     <Page
         id="idPageHome"
-        title="{i18n>users}"
+        title="{loggedInUser>/Name}"
         titleAlignment="Center"
     >
         <FlexBox
@@ -28,7 +28,7 @@
                     tableType="Table"
                     smartFilterId="sfbStudents"
                     header="{i18n>users}"
-                    enableAutoBinding="true"
+                    enableAutoBinding="false"
                     class="sapUiResponsiveContentPadding"
                     enableExport="true"
                     beforeExport="onSmartTableBeforeExport"

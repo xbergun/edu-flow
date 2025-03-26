@@ -7,7 +7,8 @@ import BaseController from "../controller/BaseController";
 export enum ApplicationModels {
     DEFAULT_ODATA = "",
     I18N = "i18n",
-    AUTH0 = "auth0"
+    AUTH0 = "auth0",
+    LOGGED_USER= "loggedInUser",
 }
 
 export enum DefaultMessages {
@@ -38,8 +39,19 @@ export enum ApplicationGroups {
 export interface IResponseV2<T> {
     d: T
 }
-export interface IAuth0{
+export interface IAuth0Config{
     Domain: string;
     ClientId: string;
     Url: string;
+}
+
+export interface IAuth0User {
+    Auth0Id: string;
+    Name: string;
+    Nickname: string;
+    Email: string;
+    Picture: string;
+    StudentNumber: string;
+    ProgramName: string;
+    DepartmentName: string;
 }

@@ -1,6 +1,6 @@
 import Controller from "sap/ui/core/mvc/Controller";
 import BaseController from "./BaseController";
-import { ApplicationModels, IAuth0, Routes } from "eduflowui/types/global.types";
+import { ApplicationModels, IAuth0Config, Routes } from "eduflowui/types/global.types";
 import JSONModel from "sap/ui/model/json/JSONModel";
 /**
  * @namespace eduflowui.controller
@@ -13,7 +13,7 @@ export default class Login extends BaseController {
     }
     public onLoginPress(): void {
         const auth0Model = this.getModel(ApplicationModels.AUTH0) as JSONModel;
-        const auth0Config: IAuth0 = auth0Model.getData();
+        const auth0Config: IAuth0Config = auth0Model.getData();
 
         const authUrl = `https://${auth0Config.Domain}/authorize?` +
             `response_type=token id_token&` +

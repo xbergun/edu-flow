@@ -3,7 +3,7 @@ import { createDeviceModel } from "./model/models";
 import ODataModel from "sap/ui/model/odata/v2/ODataModel";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Core from "sap/ui/core/Core";
-import { ApplicationModels, IAuth0 } from "./types/global.types";
+import { ApplicationModels, IAuth0Config } from "./types/global.types";
 
 /**
  * @namespace eduflowui
@@ -35,7 +35,7 @@ export default class Component extends BaseComponent {
 
         oModel.callFunction("/getAuth0Keys", {
             method: "GET",
-            success: (data: { getAuth0Keys: IAuth0 }) => {
+            success: (data: { getAuth0Keys: IAuth0Config }) => {
                 if (data?.getAuth0Keys) {
                     const auth0Model = new JSONModel(data.getAuth0Keys);
                     this.setModel(auth0Model, ApplicationModels.AUTH0);

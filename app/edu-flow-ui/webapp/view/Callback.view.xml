@@ -10,7 +10,7 @@
       justifyContent="Center"
       alignItems="Center"
       class="sapUiSmallMargin">
-      <Text text="Giriş yapılıyor..." />
+      <Text text="Signing In.." />
       <BusyIndicator />
     </VBox>
   </Page>

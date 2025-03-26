@@ -3,24 +3,29 @@ using {EduFlowService as ef} from '../../../srv/data-provider';
 
 
 annotate ef.Users with {
-    to_Department @UI.HiddenFilter;
+    to_Program @UI.HiddenFilter;
 } ;
 
 
 
 annotate ef.Users with @UI :{
     LineItem       : [
-        {Value: fullName},
+        {Value: name},
         {Value: email},
         {Value: role},
         {Value: studentNumber},
-        {Value: to_Department.name},
+        {Value: to_Program.name},
+        {Value: to_Program.to_Department.name},
         {Value: isActive}
 
     ],
     SelectionFields: [
-        fullName,
-        email
+        name,
+        email,
+        studentNumber,
+        to_Program.name,
+        to_Program.to_Department.name,
+        isActive
     ]
 };
 
@@ -34,6 +39,16 @@ annotate ef.Departments with @UI :{
         maxCredits
     ],
 };
+
+annotate ef.Programs with @UI :{
+    LineItem       : [
+        {Value: name},
+    ],
+    SelectionFields: [
+        name
+    ],
+};
+
 
 annotate ef.Courses with @UI :{
     LineItem       : [
@@ -55,14 +70,14 @@ annotate ef.Courses with @UI :{
 
 annotate ef.UserCourses with @UI :{
     LineItem       : [
-        {Value: user.fullName},
+        {Value: user.name},
         {Value: course.name},
         {Value: letterGrade},
         {Value: absenceCount},
         {Value: enrollmentDate},
     ],
     SelectionFields: [
-        user.fullName,
+        user.name,
         course.name,
         letterGrade,
         absenceCount,
