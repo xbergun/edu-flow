@@ -6,6 +6,8 @@ import BaseController from "../controller/BaseController";
 
 export enum ApplicationModels {
     DEFAULT_ODATA = "",
+    I18N = "i18n",
+    AUTH0 = "auth0"
 }
 
 export enum DefaultMessages {
@@ -23,7 +25,7 @@ export type PageController = IPage & BaseController;
 
 export enum Routes {
     LOGIN = "RouteLogin",
-    STUDENT = "RouteStudent",
+    USERS = "RouteUsers",
     COURSES = "RouteCourses",
     NOT_FOUND = "RouteNotFound",
     ERROR = "RouteError",
@@ -35,4 +37,9 @@ export enum ApplicationGroups {
 
 export interface IResponseV2<T> {
     d: T
+}
+export interface IAuth0{
+    Domain: string;
+    ClientId: string;
+    Url: string;
 }

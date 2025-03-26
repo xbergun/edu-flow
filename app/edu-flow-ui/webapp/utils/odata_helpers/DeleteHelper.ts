@@ -51,7 +51,7 @@ export default class DeleteHelper extends ManagedObject {
         });
     }
 
-    public deleteCourses(table: Table): Promise<void[]> {
+    public async deleteCourses(table: Table): Promise<void[]> {
         const selectedItems = table.getSelectedItems() as ColumnListItem[];
 
         if (selectedItems.length === 0) {

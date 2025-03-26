@@ -13,6 +13,7 @@ entity ApplicationUsers : managed {
             role          : UserRole default #Student;
             studentNumber : String(20);
             to_Department : Association to Departments;
+            isActive      : Boolean default false;
 }
 
 entity Departments {
@@ -22,18 +23,18 @@ entity Departments {
 }
 
 entity Courses : managed {
-        key ID           : UUID;
-            name         : String(100);
-            credits      : Integer default 3;
-            capacity     : Integer default 30;
-            absenceLimit : Integer default 4;
-            to_Department   : Association to Departments;
-            to_Teacher      : Association to ApplicationUsers;
+        key ID            : UUID;
+            name          : String(100);
+            credits       : Integer default 3;
+            capacity      : Integer default 30;
+            absenceLimit  : Integer default 4;
+            to_Department : Association to Departments;
+            to_Teacher    : Association to ApplicationUsers;
 }
 
-entity StudentCourses {
-        key student        : Association to ApplicationUsers;
-        key course         : Association to Courses;
+entity UserCourses {
+        key user           : Association to ApplicationUsers;
+            course         : Association to Courses;
             letterGrade    : String(2);
             absenceCount   : Integer;
             enrollmentDate : Timestamp;

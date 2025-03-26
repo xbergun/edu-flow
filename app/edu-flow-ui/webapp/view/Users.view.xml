@@ -1,0 +1,77 @@
+<mvc:View
+    controllerName="eduflowui.controller.Users"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+>
+    <Page
+        id="idPageHome"
+        title="{i18n>users}"
+        titleAlignment="Center"
+    >
+        <FlexBox
+            justifyContent="Center"
+            alignItems="Center"
+        >
+            <VBox width="95%">
+                <smartFilterBar:SmartFilterBar
+                    id="sfbUsers"
+                    entitySet="Users"
+                    showGoOnFB="true"
+                    enableBasicSearch="true"
+                />
+                <smartTable:SmartTable
+                    id="stUsers"
+                    entitySet="Users"
+                    tableType="Table"
+                    smartFilterId="sfbStudents"
+                    header="{i18n>users}"
+                    enableAutoBinding="true"
+                    class="sapUiResponsiveContentPadding"
+                    enableExport="true"
+                    beforeExport="onSmartTableBeforeExport"
+                    enableCopy="false"
+                    showFullScreenButton="true"
+                >
+                    <Table
+                        id="tblUsers"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        mode="MultiSelect"
+                        growing="true"
+                        growingThreshold="100"
+                    >
+                       <columns>
+                            <Column>
+                                <Text text="{i18n>isActive}" />
+                                <customData>
+                                    <core:CustomData
+                                        key="p13nData"
+                                        value='\{"columnKey": "isActive","leadingProperty": "isActive","sortProperty": "isActive","filterProperty": "isActive","columnIndex":"99"}'
+                                    />
+                                </customData>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem
+                                type="Navigation"
+                                press="onColumnListItemPress"
+                            >
+                             <cells>
+                                    <ObjectStatus
+                                        text="{isActive}"
+                                        state="{
+                                            path: 'isActive',
+                                            formatter: '.formatter.formatIsActive'
+                                        }"
+                                    />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
+            </VBox>
+        </FlexBox>
+    </Page>
+</mvc:View>

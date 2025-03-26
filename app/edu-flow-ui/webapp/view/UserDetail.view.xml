@@ -1,0 +1,201 @@
+<mvc:View
+    xmlns:table="sap.ui.table"
+    controllerName="eduflowui.controller.UserDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0"
+>
+       <ObjectPageLayout id="idObjectPageLayout">
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Button
+                        press="onNavBack"
+                        type="Up"
+                    />
+                </expandedHeading>
+                <actions>
+                    <m:Button
+                        press="onSaveButtonPress"
+                        text="{i18n>save}"
+                        icon="sap-icon://save"
+                        type="Accept"
+                    />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <sections>
+            <ObjectPageSection title="User Detail">
+                <ObjectPageSubSection>
+                    <blocks>
+                        <m:VBox width="95%">
+                            <smartForm:SmartForm
+                                id="idSmartFormUserDetail"
+                                editable="true"
+                            >
+                                <smartForm:layout>
+                                    <smartForm:ColumnLayout
+                                        columnsM="3"
+                                        columnsL="3"
+                                        columnsXL="3"
+                                    />
+                                </smartForm:layout>
+                                <smartForm:Group>
+                                    <smartForm:GroupElement>
+                                        <smartField:SmartField
+                                            value="{fullName}"
+                                            editable="false"
+                                        />
+                                    </smartForm:GroupElement>
+                                    <smartForm:GroupElement>
+                                        <smartField:SmartField
+                                            value="{PurchaseOrderItem}"
+                                            editable="false"
+                                        />
+                                    </smartForm:GroupElement>
+                                    <smartForm:GroupElement>
+                                        <smartField:SmartField
+                                            value="{EUDRHSCode}"
+                                            editable="true"
+                                        />
+                                    </smartForm:GroupElement>
+                                    <smartForm:GroupElement>
+                                        <smartField:SmartField
+                                            value="{EUDROperatorEORINumber}"
+                                            editable="true"
+                                        />
+                                    </smartForm:GroupElement>
+                                </smartForm:Group>
+                            </smartForm:SmartForm>
+                            <smartForm:SmartForm
+                                id="idSmartFormPurchaseOrder"
+                                editable="true"
+                                binding="{attributeStatus>/}"
+                            >
+                                <smartForm:layout>
+                                    <smartForm:ColumnLayout
+                                        columnsM="3"
+                                        columnsL="3"
+                                        columnsXL="3"
+                                    />
+                                </smartForm:layout>
+                                <smartForm:Group>
+                                    <smartForm:GroupElement>
+                                        <m:ObjectStatus
+                                            title="{i18n>status}"
+                                            text="{attributeStatus>/Status}"
+                                            state="{path: 'attributeStatus>/Status', formatter:'.formatter.formatStatus'}"
+                                            icon="{path: 'attributeStatus>/Status', formatter:'.formatter.formatStatusIcon'}"
+                                            inverted="true"
+                                        />
+                                    </smartForm:GroupElement>
+                                    <smartForm:GroupElement>
+                                        <m:Input
+                                            value="{attributeStatus>/ProductDescription}"
+                                            editable="false"
+                                        />
+                                    </smartForm:GroupElement>
+                                </smartForm:Group>
+                            </smartForm:SmartForm>
+                            <smartForm:SmartForm
+                                id="idSmartFormComment"
+                                editable="true"
+                                binding="{comment>/}"
+                            >
+                                <smartForm:layout>
+                                    <smartForm:ColumnLayout
+                                        columnsM="3"
+                                        columnsL="3"
+                                        columnsXL="3"
+                                    />
+                                </smartForm:layout>
+                                <smartForm:Group>
+                                    <smartForm:GroupElement>
+                                        <m:ObjectStatus
+                                            title="{i18n>comment}"
+                                            text="{comment>/Comment}"
+                                            visible="{comment>/Visible}"
+                                        />
+                                    </smartForm:GroupElement>
+                                </smartForm:Group>
+                            </smartForm:SmartForm>
+                        </m:VBox>
+                    </blocks>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+            <ObjectPageSection title="Product Species">
+                <ObjectPageSubSection>
+                    <blocks>
+                        <m:VBox width="100%">
+                            <m:Table
+                                id="idUserCoursesTable"
+                                mode="MultiSelect"
+                                items=""
+                            >
+                                <m:headerToolbar>
+                                    <m:Toolbar>
+                                        <m:ToolbarSpacer />
+                                        <m:Button
+                                            icon="sap-icon://add"
+                                            press="onAddProductSpecies"
+                                            text="Add"
+                                        />
+                                        <m:Button
+                                            icon="sap-icon://delete"
+                                            press="onDeleteProductSpecies"
+                                            text="Delete"
+                                        />
+                                    </m:Toolbar>
+                                </m:headerToolbar>
+                                <m:columns>
+                                    <m:Column>
+                                        <m:Text text="Scientific Name" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Common Name" />
+                                    </m:Column>
+                                    <m:Column width="3rem" />
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem>
+                                        <m:cells />
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                        </m:VBox>
+                    </blocks>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+            <ObjectPageSection title="Production Locations">
+                <ObjectPageSubSection>
+                    <blocks>
+                        <m:VBox width="100%">
+                            <m:Toolbar>
+                                <m:ToolbarSpacer />
+                                <m:Button
+                                    icon="sap-icon://download"
+                                    text="Export"
+                                    press="onDownloadLocation"
+                                />
+                                <m:Button
+                                    icon="sap-icon://add"
+                                    text="Add New Location"
+                                    press="onAddLocation"
+                                />
+                            </m:Toolbar>
+                            <m:VBox
+                                id="idLocationContainer"
+                                width="100%"
+                            />
+                        </m:VBox>
+                    </blocks>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>

@@ -9,7 +9,7 @@
     height="100%"
     busyIndicatorDelay="0"
 >
-    <ObjectPageLayout id="idObjectPageLayout">
+    <!-- <ObjectPageLayout id="idObjectPageLayout">
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
@@ -89,13 +89,7 @@
                                     />
                                 </smartForm:layout>
                                 <smartForm:Group>
-                                    <smartForm:GroupElement>
-                                        <m:ObjectStatus
-                                            title="{i18n>comment}"
-                                            text="{comment>/Comment}"
-                                            visible="{comment>/Visible}"
-                                        />
-                                    </smartForm:GroupElement>
+
                                 </smartForm:Group>
                             </smartForm:SmartForm>
                         </m:VBox>
@@ -103,5 +97,5 @@
                 </ObjectPageSubSection>
             </ObjectPageSection>
         </sections>
-    </ObjectPageLayout>
+    </ObjectPageLayout> -->
 </mvc:View>

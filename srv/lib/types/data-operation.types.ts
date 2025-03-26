@@ -1,3 +1,20 @@
+export interface IUsers {
+    ID : string;
+    FullName : string;
+    Email: string;
+    StudentNumber: string;
+    Role: string;
+    IsActive: boolean;
+}
+
+export interface IUserCourses{
+    CourseID : string;
+    UserID : string;
+    AbsenceCount: number;
+    LetterGrade: string;
+    EnrollmentDate: Date;
+}
+
 export interface ICourses {
     ID : string;
     Name : string;

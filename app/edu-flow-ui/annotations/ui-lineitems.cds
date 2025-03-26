@@ -14,6 +14,8 @@ annotate ef.Users with @UI :{
         {Value: email},
         {Value: role},
         {Value: studentNumber},
+        {Value: to_Department.name},
+        {Value: isActive}
 
     ],
     SelectionFields: [
@@ -47,5 +49,23 @@ annotate ef.Courses with @UI :{
         credits,
         capacity,
         absenceLimit
+    ],
+};
+
+
+annotate ef.UserCourses with @UI :{
+    LineItem       : [
+        {Value: user.fullName},
+        {Value: course.name},
+        {Value: letterGrade},
+        {Value: absenceCount},
+        {Value: enrollmentDate},
+    ],
+    SelectionFields: [
+        user.fullName,
+        course.name,
+        letterGrade,
+        absenceCount,
+        enrollmentDate
     ],
 };

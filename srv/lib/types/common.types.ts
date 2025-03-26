@@ -7,3 +7,9 @@ export interface ICAPRequest extends Request {
         req: ExpressRequest;
     };
 }
+
+export interface IAuth0Config {
+    Url: string;
+    Domain: string;
+    ClientId: string;
+  }
