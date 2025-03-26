@@ -100,10 +100,10 @@
           ]
         },
         {
-          "name": "RouteStudent",
-          "pattern": "student",
+          "name": "RouteUsers",
+          "pattern": "users",
           "target": [
-            "RouteStudent"
+            "RouteUsers"
           ]
         },
         {
@@ -119,6 +119,18 @@
           "target": [
             "RouteCourseDetail"
           ]
+        },
+        {
+          "name": "RouteUserDetail",
+          "pattern": "user/{userId}/",
+          "target": [
+            "RouteUserDetail"
+          ]
+        },
+        {
+          "pattern": "callback",
+          "name": "callback",
+          "target": "Callback"
         }
       ],
       "targets": {
@@ -126,9 +138,9 @@
           "id": "Login",
           "name": "Login"
         },
-        "RouteStudent": {
-          "id": "Student",
-          "name": "Student"
+        "RouteUsers": {
+          "id": "Users",
+          "name": "Users"
         },
         "RouteCourses": {
           "id": "Courses",
@@ -137,6 +149,14 @@
         "RouteCourseDetail": {
           "id": "CourseDetail",
           "name": "CourseDetail"
+        },
+        "RouteUserDetail": {
+          "id": "UserDetail",
+          "name": "UserDetail"
+        },
+        "Callback": {
+          "id": "Callback",
+          "name": "Callback"
         }
       }
     },
