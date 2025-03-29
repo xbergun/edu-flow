@@ -5,13 +5,13 @@
     {
       "source": "^/odata/v2/edu-flow(.*)$",
       "destination": "backend-api",
-      "authenticationType": "xsuaa"
+      "authenticationType": "none"
     },
     {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",
-      "authenticationType": "xsuaa"
+      "authenticationType": "none"
     },
     {
       "source": "^/resources/(.*)$",

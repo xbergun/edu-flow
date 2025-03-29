@@ -13,8 +13,7 @@ service EduFlowService {
     entity Courses     as projection on DBCourses;
     entity UserCourses as projection on DBStudentCourses;
     entity Programs    as projection on DBPrograms;
-    function getUserCourses(user_ID : UUID) returns array of UserCourses;
-
+    
     function getAuth0Keys()                 returns {
         domain : String;
         clientId : String;

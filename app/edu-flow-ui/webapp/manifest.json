@@ -121,16 +121,14 @@
           ]
         },
         {
-          "name": "RouteUserDetail",
-          "pattern": "user/{userId}/",
-          "target": [
-            "RouteUserDetail"
-          ]
-        },
-        {
           "pattern": "callback",
           "name": "callback",
           "target": "Callback"
+        },
+        {
+          "name": "RouteDashboard",
+          "pattern": "dashboard",
+          "target": "RouteDashboard"
         }
       ],
       "targets": {
@@ -150,13 +148,13 @@
           "id": "CourseDetail",
           "name": "CourseDetail"
         },
-        "RouteUserDetail": {
-          "id": "UserDetail",
-          "name": "UserDetail"
-        },
         "Callback": {
           "id": "Callback",
           "name": "Callback"
+        },
+        "RouteDashboard": {
+          "id": "Dashboard",
+          "name": "Dashboard"
         }
       }
     },

@@ -1,0 +1,163 @@
+<mvc:View
+    controllerName="eduflowui.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0"
+>
+    <ObjectPageLayout id="idObjectPageLayoutDashboard">
+        <sections>
+            <ObjectPageSection title="Student Details">
+                <ObjectPageSubSection>
+                    <blocks>
+                        <m:VBox width="80%">
+                            <m:HBox
+                                width="100%"
+                                alignItems="Center"
+                                justifyContent="Center"
+                                class="sapUiMediumMarginTop"
+                            >
+                                <m:VBox
+                                    width="20%"
+                                    alignItems="Center"
+                                    justifyContent="Center"
+                                >
+                                    <m:Image
+                                        src="{loggedInUser>/Picture}"
+                                        width="120px"
+                                        height="120px"
+                                        class="sapUiSmallMarginEnd"
+                                    />
+                                </m:VBox>
+
+                                <m:VBox width="80%">
+                                    <m:HBox
+                                        width="100%"
+                                        class="sapUiSmallMarginBottom"
+                                    >
+                                        <m:VBox width="48%">
+                                            <m:Label text="Full Name" />
+                                            <m:Input
+                                                value="{loggedInUser>/Name}"
+                                                editable="false"
+                                            />
+                                        </m:VBox>
+                                        <m:VBox
+                                            width="48%"
+                                            class="sapUiSmallMarginBegin"
+                                        >
+                                            <m:Label text="Nickname" />
+                                            <m:Input
+                                                value="{loggedInUser>/Nickname}"
+                                                editable="false"
+                                            />
+                                        </m:VBox>
+                                    </m:HBox>
+                                    <m:HBox
+                                        width="100%"
+                                        class="sapUiSmallMarginBottom"
+                                    >
+                                        <m:VBox width="48%">
+                                            <m:Label text="Email" />
+                                            <m:Input
+                                                value="{loggedInUser>/Email}"
+                                                editable="false"
+                                            />
+                                        </m:VBox>
+                                        <m:VBox
+                                            width="48%"
+                                            class="sapUiSmallMarginBegin"
+                                        >
+                                            <m:Label text="Student Number" />
+                                            <m:Input
+                                                value="{loggedInUser>/StudentNumber}"
+                                                editable="false"
+                                            />
+                                        </m:VBox>
+                                    </m:HBox>
+                                    <m:HBox width="100%">
+                                        <m:VBox width="48%">
+                                            <m:Label text="Program" />
+                                            <m:Input
+                                                value="{loggedInUser>/ProgramName}"
+                                                editable="false"
+                                            />
+                                        </m:VBox>
+                                        <m:VBox
+                                            width="48%"
+                                            class="sapUiSmallMarginBegin"
+                                        >
+                                            <m:Label text="Department" />
+                                            <m:Input
+                                                value="{loggedInUser>/DepartmentName}"
+                                                editable="false"
+                                            />
+                                        </m:VBox>
+                                    </m:HBox>
+                                </m:VBox>
+                            </m:HBox>
+                        </m:VBox>
+                    </blocks>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+            <ObjectPageSection title="My Courses">
+                <ObjectPageSubSection>
+                    <blocks>
+                        <m:VBox width="100%">
+                            <m:Table
+                                id="idUserCoursesTable"
+                                mode="MultiSelect"
+                                items="{/UserCourses}"
+                            >
+                                <m:headerToolbar>
+                                    <m:Toolbar>
+                                        <m:ToolbarSpacer />
+                                        <m:Button
+                                            icon="sap-icon://add"
+                                            press="onAddProductSpecies"
+                                            text="Add"
+                                        />
+                                        <m:Button
+                                            icon="sap-icon://delete"
+                                            press="onDeleteProductSpecies"
+                                            text="Delete"
+                                        />
+                                    </m:Toolbar>
+                                </m:headerToolbar>
+                                <m:columns>
+                                    <m:Column>
+                                        <m:Text text="Course Name" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Course Credit" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="My Absence" />
+                                    </m:Column>
+                                     <m:Column>
+                                        <m:Text text="Absence Limit" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Teacher" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="My Letter Grade" />
+                                    </m:Column>
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem>
+                                        <m:cells />
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
+                        </m:VBox>
+                    </blocks>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
+</mvc:View>

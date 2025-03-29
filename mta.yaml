@@ -35,7 +35,6 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: edu-flow-db
-      - name: edu-flow-auth
       - name: edu-flow-destination
       - name: edu-flow-connectivity
 
@@ -61,7 +60,6 @@ modules:
           name: backend-api
           url: ~{srv-url}
           forwardAuthToken: true
-      - name: edu-flow-auth
       - name: edu-flow-destination
       - name: edu-flow-runtime
 
@@ -97,13 +95,6 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
-
-  - name: edu-flow-auth
-    type: org.cloudfoundry.managed-service
-    parameters:
-      path: ./xs-security.json
-      service: xsuaa
-      service-plan: application
 
   - name: edu-flow-destination
     type: org.cloudfoundry.managed-service

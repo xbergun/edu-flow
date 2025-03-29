@@ -8,6 +8,7 @@ annotate ef.Users with {
     studentNumber         @Common.Label: '{i18n>studentNumber}';
     isActive              @Common.Label: '{i18n>isActive}';
     auth0_ID              @Common.Label: '{i18n>auth0_ID}';
+    nickname              @Common.Label: '{i18n>nickname}';
 };
 
 annotate ef.Departments with {

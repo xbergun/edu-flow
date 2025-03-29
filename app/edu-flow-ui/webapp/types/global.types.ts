@@ -30,6 +30,7 @@ export enum Routes {
     COURSES = "RouteCourses",
     NOT_FOUND = "RouteNotFound",
     ERROR = "RouteError",
+    DASHBOARD = "RouteDashboard",
 }
 
 export enum ApplicationGroups {
@@ -54,4 +55,5 @@ export interface IAuth0User {
     StudentNumber: string;
     ProgramName: string;
     DepartmentName: string;
+    IsTeacher: boolean;
 }

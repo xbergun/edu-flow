@@ -32,7 +32,7 @@ export default class Users extends BaseController {
 
         oSmartTable.attachBeforeRebindTable((oEvent: any) => {
             const bindingParams = oEvent.getParameter("bindingParams");
-            const user = JSON.parse(userStr);
+            const user = JSON.parse("userStr");
             const filter = new Filter("auth0_ID", FilterOperator.EQ, user.Auth0Id);
             bindingParams.filters.push(filter);
         });

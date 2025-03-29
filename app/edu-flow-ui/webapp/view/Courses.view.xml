@@ -28,7 +28,7 @@
                     tableType="Table"
                     smartFilterId="sfbCourses"
                     header="{i18n>courses}"
-                    enableAutoBinding="true"
+                    enableAutoBinding="false"
                     class="sapUiResponsiveContentPadding"
                     enableExport="true"
                     beforeExport="onSmartTableBeforeExport"

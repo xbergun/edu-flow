@@ -4,8 +4,7 @@ using {EduFlowService as ef} from '../../../srv/data-provider';
 
 annotate ef.Users with {
     to_Program @UI.HiddenFilter;
-} ;
-
+};
 
 
 annotate ef.Users with @UI :{
@@ -13,6 +12,7 @@ annotate ef.Users with @UI :{
         {Value: name},
         {Value: email},
         {Value: role},
+        {Value: nickname},
         {Value: studentNumber},
         {Value: to_Program.name},
         {Value: to_Program.to_Department.name},
@@ -70,6 +70,7 @@ annotate ef.Courses with @UI :{
 
 annotate ef.UserCourses with @UI :{
     LineItem       : [
+        {Value: user_auth0_ID},
         {Value: user.name},
         {Value: course.name},
         {Value: letterGrade},
