@@ -56,8 +56,6 @@ annotate ef.Courses with @UI :{
         {Value: credits},
         {Value: capacity},
         {Value: absenceLimit},
-        {Value: createdBy},
-        {Value: createdAt},
     ],
     SelectionFields: [
         name,

@@ -56,8 +56,8 @@ export default class Callback extends BaseController {
 
       this.oDataCreateHelper.createUser(userData).then(() => {
         const loggedInUser = this.getOwnerComponent()?.getModel("loggedInUser") as JSONModel;
-
         loggedInUser.setData(userData);
+
         userData.IsTeacher ? this.getRouter().navTo(Routes.COURSES) : this.getRouter().navTo(Routes.DASHBOARD);
       
       }).catch((error) => {

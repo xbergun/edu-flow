@@ -24,26 +24,30 @@ export default class Courses extends BaseController {
     private oDataDeleteHelper!: DeleteHelper;
     private oDataCreateHelper!: CreateHelper;
     private auth0_Id!: string;
+    private programName!: string;
+    private smartTable!: SmartTable;
 
     /*eslint-disable @typescript-eslint/no-empty-function*/
     public onInit(): void {
         const model = (this.getOwnerComponent() as Component).getModel() as ODataModel;
         const user = this.getLoggedInUserData();
         this.auth0_Id = user.Auth0Id;
+        this.programName = user.ProgramName;
 
         console.log("Auth0 ID:", this.auth0_Id);
         const view = this.getCurrentView();
         this.dialogBuilder = new DialogBuilder(view);
         this.oDataDeleteHelper = new DeleteHelper(model);
         this.oDataCreateHelper = new CreateHelper(model);
+        this.smartTable = this.byId("stCourses") as SmartTable;
         this.setCoursesBinding();
     }
 
     private setCoursesBinding(): void {
-        const smartTable = this.byId("stCourses") as SmartTable;
+        const smartTable = this.smartTable;
         const component = this.getOwnerComponent() as Component;
         const user = this.getLoggedInUserData();
-            
+
         const oDataModel = component.getModel() as ODataModel;
         oDataModel.setHeaders({
             "x-auth0-id": user.Auth0Id 
@@ -81,7 +85,9 @@ export default class Courses extends BaseController {
         }
     
         try {
-            await this.oDataCreateHelper.createCourse(formData);
+            await this.oDataCreateHelper.createCourse(formData, this.auth0_Id, this.programName).finally(() => { 
+                this.smartTable.rebindTable(true);
+            });
     
         } catch (error) {
             console.error("Unexpected error while creating course:", error);

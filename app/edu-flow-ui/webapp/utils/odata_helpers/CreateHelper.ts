@@ -3,8 +3,8 @@ import ODataModel from "sap/ui/model/odata/v2/ODataModel";
 import MessageToast from "sap/m/MessageToast";
 import Table from "sap/m/Table";
 import { IAuth0User, IResponseV2 } from "../../types/global.types";
-import  Filter  from 'sap/ui/model/Filter';
-import  FilterOperator  from 'sap/ui/model/FilterOperator';
+import Filter from 'sap/ui/model/Filter';
+import FilterOperator from 'sap/ui/model/FilterOperator';
 
 /**
  * @namespace eduflowui.utils.odata_helpers
@@ -33,10 +33,16 @@ export default class CreateHelper extends ManagedObject {
         });
     }
 
-    public async createCourse(courseData: object): Promise<string | boolean> {
-        
+    public async createCourse(courseData: object, auth0_Id: string, programName: string): Promise<string | boolean> {
 
-        return this.createEntity("/Courses", courseData, "New course created.");
+        const programId = await this.getProgramId(programName);
+
+        const newData = {
+            ...courseData,
+            to_Teacher_auth0_ID: auth0_Id,
+            to_Program_ID: programId
+        }
+        return this.createEntity("/Courses", newData, "New course created.")
     }
 
 
@@ -58,12 +64,12 @@ export default class CreateHelper extends ManagedObject {
             studentNumber: userData.StudentNumber,
             role: userData.IsTeacher ? "Teacher" : "Student",
             to_Program_ID: programId
-          };
+        };
 
         return this.createEntity("/Users", newUser, "New user created.");
     }
 
-    private CheckIfUserExists = (auth0Id: string) : Promise<boolean> => {
+    private CheckIfUserExists = (auth0Id: string): Promise<boolean> => {
         return new Promise((resolve, reject) => {
             this.model.read("/Users", {
                 filters: [new Filter("auth0_ID", FilterOperator.EQ, auth0Id)],

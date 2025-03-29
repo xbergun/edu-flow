@@ -10,11 +10,6 @@ export const getCourses: OnEventHandler = async function (req: Request): Promise
 
     const auth0Id = req.headers["x-auth0-id"];
 
-    if (!auth0Id || typeof auth0Id !== "string") {
-        req.error(400, "Missing or invalid 'x-auth0-id' header");
-        return [];
-    }
-
     const courses = await tx.run(
         SELECT.from(Courses)
             .columns(
