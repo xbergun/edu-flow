@@ -1,0 +1,47 @@
+<mvc:View
+    controllerName="eduflowui.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+>
+    <Page
+        title="Edu Flow"
+        class="sapUiContentPadding"
+        titleAlignment="Center"
+    >
+        <content>
+            <VBox
+                justifyContent="Center"
+                alignItems="Center"
+                width="100%"
+                height="100%"
+                class="loginContainer"
+            >
+                <Panel
+                    headerText="Login"
+                    class="loginPanel"
+                    
+                >
+                    <content>
+                        <VBox
+                            alignItems="Center"
+                            justifyContent="Center"
+                            width="100%"
+                        >
+                            <Text
+                                text="login to the course registration system."
+                                textAlign="Center"
+                            />
+                            <Button
+                                text="Login with Auth0"
+                                icon="sap-icon://log"
+                                press="onLoginPress"
+                                class="loginButton"
+                            />
+                        </VBox>
+                    </content>
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

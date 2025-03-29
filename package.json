@@ -12,7 +12,8 @@
     "@sap-cloud-sdk/http-client": "^3.26.0",
     "@sap/cds": "^8.7.2",
     "@sap/xssec": "^4.2.8",
-    "express": "^4",
+    "express": "^4.21.2",
+    "express-openid-connect": "^2.18.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
@@ -31,9 +32,8 @@
   },
   "scripts": {
     "start": "cds-serve",
+    "build-ts": "npx tsc",
     "watch": "cds-tsx w",
-    "watch-edu-flow-ui": "cds watch --open eduflowui/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "undeploy": "cf undeploy edu-flow --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
@@ -42,7 +42,7 @@
       "native_hana_associations": false
     },
     "requires": {
-      "auth": "xsuaa"
+      "auth": "dummy"
     },
     "cov2ap": {
       "plugin": true

@@ -1,0 +1,17 @@
+<mvc:View
+  controllerName="eduflowui.controller.Callback"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m">
+  <Page
+    id="callbackPage"
+    title="Callback"
+    showHeader="false">
+    <VBox
+      justifyContent="Center"
+      alignItems="Center"
+      class="sapUiSmallMargin">
+      <Text text="Signing In.." />
+      <BusyIndicator />
+    </VBox>
+  </Page>
+</mvc:View>

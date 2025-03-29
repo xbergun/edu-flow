@@ -6,34 +6,43 @@ type UserRole : String enum {
 }
 
 entity ApplicationUsers : managed {
-        key ID            : UUID;
-            auth0_id      : String(255);
-            fullName      : String(100);
-            email         : String(255);
-            role          : UserRole;
+        key auth0_ID      : String(255);
+            name          : String(100);
+            nickname      : String(100);
+            email         : String(50);
+            picture       : String(255);
+            role          : UserRole default #Student;
             studentNumber : String(20);
-            to_Department : Association to Departments;
+            to_Program    : Association to one Programs;
+            isActive      : Boolean default true;
 }
 
 entity Departments {
-        key ID      : UUID;
-            name    : String(100);
-            maxAkts : Integer;
+        key ID         : UUID;
+            name       : String(100);
+            maxCredits : Integer;
 }
 
-entity Courses {
+entity Programs {
+        key ID            : UUID;
+            name          : String(100);
+            to_Department : Association to one Departments;
+}
+
+entity Courses : managed {
         key ID           : UUID;
             name         : String(100);
-            akts         : Integer;
-            capacity     : Integer;
-            absenceLimit : Integer;
-            department   : Association to Departments;
-            teacher      : Association to ApplicationUsers;
+            credits      : Integer default 3;
+            capacity     : Integer default 30;
+            absenceLimit : Integer default 4;
+            to_Program   : Association to one Programs;
+            to_Teacher   : Association to one ApplicationUsers;
 }
 
-entity StudentCourses {
-        key student        : Association to ApplicationUsers;
-        key course         : Association to Courses;
+entity UserCourses {
+        key ID             : UUID;
+            user           : Association to ApplicationUsers;
+            course         : Association to Courses;
             letterGrade    : String(2);
             absenceCount   : Integer;
             enrollmentDate : Timestamp;

@@ -1,0 +1,73 @@
+<mvc:View
+    controllerName="eduflowui.controller.Courses"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+>
+    <Page
+        id="idPageCourses"
+        title="{i18n>courses}"
+        titleAlignment="Center"
+    >
+        <FlexBox
+            justifyContent="Center"
+            alignItems="Center"
+        >
+            <VBox width="95%">
+                <smartFilterBar:SmartFilterBar
+                    id="sfbCourses"
+                    entitySet="Courses"
+                    showGoOnFB="true"
+                    enableBasicSearch="true"
+                />
+                <smartTable:SmartTable
+                    id="stCourses"
+                    entitySet="Courses"
+                    tableType="Table"
+                    smartFilterId="sfbCourses"
+                    header="{i18n>courses}"
+                    enableAutoBinding="false"
+                    class="sapUiResponsiveContentPadding"
+                    enableExport="true"
+                    beforeExport="onSmartTableBeforeExport"
+                    enableCopy="false"
+                    showFullScreenButton="true"
+                >
+                    <smartTable:customToolbar>
+                        <OverflowToolbar design="Transparent">
+                            <ToolbarSpacer />
+                            <Button
+                                text="{i18n>newCourseButtonText}"
+                                type="Accept"
+                                press="onAddCourseButtonPress"
+                            />
+                            <Button
+                                text="{i18n>deleteCourseButtonText}"
+                                type="Reject"
+                                press="onDeleteCourseButtonPress"
+                            />
+                        </OverflowToolbar>
+                    </smartTable:customToolbar>
+                    <Table
+                        id="idCoursesTable"
+                        sticky="ColumnHeaders,HeaderToolbar"
+                        mode="MultiSelect"
+                        growing="true"
+                        growingThreshold="100"
+                    >
+                      <items>
+                            <ColumnListItem
+                                type="Navigation"
+                                press="onColumnListItemPress"
+                            >
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    
+                </smartTable:SmartTable>
+            </VBox>
+        </FlexBox>
+    </Page>
+</mvc:View>

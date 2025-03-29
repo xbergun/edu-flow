@@ -43,7 +43,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.133.0",
       "libs": {
@@ -68,7 +68,9 @@
         "settings": {
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "earlyRequests": true
+          "earlyRequests": true,
+          "defaultCountMode": "None",
+          "defaultBindingMode": "TwoWay"
         }
       }
     },
@@ -91,17 +93,68 @@
       },
       "routes": [
         {
-          "name": "RouteHome",
+          "name": "RouteLogin",
           "pattern": ":?query:",
           "target": [
-            "TargetHome"
+            "TargetLogin"
           ]
+        },
+        {
+          "name": "RouteUsers",
+          "pattern": "users",
+          "target": [
+            "RouteUsers"
+          ]
+        },
+        {
+          "name": "RouteCourses",
+          "pattern": "courses",
+          "target": [
+            "RouteCourses"
+          ]
+        },
+        {
+          "name": "RouteCourseDetail",
+          "pattern": "details/{courseId}/name/{courseName}",
+          "target": [
+            "RouteCourseDetail"
+          ]
+        },
+        {
+          "pattern": "callback",
+          "name": "callback",
+          "target": "Callback"
+        },
+        {
+          "name": "RouteDashboard",
+          "pattern": "dashboard",
+          "target": "RouteDashboard"
         }
       ],
       "targets": {
-        "TargetHome": {
-          "id": "Home",
-          "name": "Home"
+        "TargetLogin": {
+          "id": "Login",
+          "name": "Login"
+        },
+        "RouteUsers": {
+          "id": "Users",
+          "name": "Users"
+        },
+        "RouteCourses": {
+          "id": "Courses",
+          "name": "Courses"
+        },
+        "RouteCourseDetail": {
+          "id": "CourseDetail",
+          "name": "CourseDetail"
+        },
+        "Callback": {
+          "id": "Callback",
+          "name": "Callback"
+        },
+        "RouteDashboard": {
+          "id": "Dashboard",
+          "name": "Dashboard"
         }
       }
     },
