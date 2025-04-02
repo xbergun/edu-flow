@@ -70,4 +70,24 @@ export default class DeleteHelper extends ManagedObject {
 
         return Promise.all(deletePromises);
     }
+
+    public async deleteUserCourses(table: Table): Promise<void[]> {
+        const selectedItems = table.getSelectedItems() as ColumnListItem[];
+
+        if (selectedItems.length === 0) {
+            MessageToast.show("Please select at least one row to delete.");
+            return Promise.resolve([]);
+        }
+
+        const deletePromises = selectedItems.map((item) => {
+            const data = item.getBindingContext()?.getObject() as { ID: string, user_auth0_ID: string, course_ID: string };
+            if (data) {
+                const deletePath = `/UserCourses(ID=guid'${data.ID}',user_auth0_ID='${data.user_auth0_ID}',course_ID=guid'${data.course_ID}')`;
+                return this.deleteEntity(deletePath, "Selected courses deleted.");
+            }
+            return Promise.resolve();
+        });
+
+        return Promise.all(deletePromises);
+    }
 }

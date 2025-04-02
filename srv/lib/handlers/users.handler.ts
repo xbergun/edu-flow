@@ -12,7 +12,7 @@ export const getUsers: OnEventHandler = async function (req: Request): Promise<I
 export const getCurrentCreditsByStudent: OnEventHandler = async function (req: Request): Promise<ICredits[]> {
     const db = await cds.connect.to("db");
     const tx = cds.transaction(req);
-    const { UserCourses, ApplicationUsers, Departments } = db.entities;
+    const { UserCourses, ApplicationUsers } = db.entities;
 
     const { auth0_ID } = req.data;
 
@@ -32,15 +32,29 @@ export const getCurrentCreditsByStudent: OnEventHandler = async function (req: R
         throw new Error("User not found");
     }
 
+    const maxCredits = user[0].to_Program_to_Department_maxCredits ?? 0;
 
+    const userCourses = await tx.run(
+        SELECT.from(UserCourses)
+            .columns("course.credits")
+            .where({ user_auth0_ID: auth0_ID })
+    );
 
+    if (!userCourses || userCourses.length === 0) {
+        return [{ currentCredits: 0, maxCredits }];
+    }
+
+    const currentCredits = userCourses.reduce((acc: any, course: any) => {
+        return acc + (course.course_credits ?? 0);
+    }, 0);
 
     const credits: ICredits[] = [
         {
-            currentCredits: 0,
-            maxCredits: user[0].to_Program.to_Department.maxCredits,
+            currentCredits,
+            maxCredits
+
         }
     ];
-    console.log("getUsers");
+
     return credits;
 };

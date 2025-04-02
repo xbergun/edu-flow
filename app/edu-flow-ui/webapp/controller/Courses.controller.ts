@@ -43,7 +43,7 @@ export default class Courses extends BaseController {
         this.setCoursesBinding();
     }
 
-    private onLogoutButtonPress(): void {
+    public onLogoutButtonPress(): void {
         return this.onLogOutButtonPress();
     }
 

@@ -4,6 +4,7 @@ import ODataModel from "sap/ui/model/odata/v2/ODataModel";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import Core from "sap/ui/core/Core";
 import { ApplicationModels, IAuth0Config } from "./types/global.types";
+import MessageToast from "sap/m/MessageToast";
 
 /**
  * @namespace eduflowui
@@ -52,6 +53,7 @@ export default class Component extends BaseComponent {
             },
             error: (error: any) => {
                 console.error("❌", error);
+                MessageToast.show("Error fetching Auth0 keys");
             }
         });
     }

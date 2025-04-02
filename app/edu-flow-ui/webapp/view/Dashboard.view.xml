@@ -129,7 +129,7 @@
                                         />
                                         <m:Button
                                             icon="sap-icon://delete"
-                                            press="onDeleteProductSpecies"
+                                            press="onDeleteCoursesButtonPress"
                                             text="Delete"
                                         />
                                     </m:Toolbar>

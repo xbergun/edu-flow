@@ -8,6 +8,7 @@ import Table from "sap/m/Table";
 import Component from "eduflowui/Component";
 import TableBuilder from "eduflowui/utils/generic_builders/TableBuilder";
 import DialogBuilder from "eduflowui/utils/generic_builders/DialogBuilder";
+import DeleteHelper from "eduflowui/utils/odata_helpers/DeleteHelper";
 /**
  * @namespace eduflowui.controller
  */
@@ -15,6 +16,7 @@ export default class Dashboard extends BaseController {
     private auth0_Id!: string;
     private tableBuilder!: TableBuilder;
     private dialogBuilder!: DialogBuilder;
+    private oDataDeleteHelper!: DeleteHelper;
     private model!: ODataModel;
 
     /*eslint-disable @typescript-eslint/no-empty-function*/
@@ -27,6 +29,7 @@ export default class Dashboard extends BaseController {
         this.auth0_Id = user.Auth0Id;
         this.tableBuilder = new TableBuilder(view, model);
         this.dialogBuilder = new DialogBuilder(view);
+        this.oDataDeleteHelper = new DeleteHelper(model);
 
         this.bindUserCourses()
     }
@@ -59,8 +62,21 @@ export default class Dashboard extends BaseController {
 
     }
 
-    private async onAddCourseButtonPress(): Promise<void> {
+    public async onAddCourseButtonPress(): Promise<void> {
         const formData = await this.dialogBuilder.addNewCourseByUserDialog();
     }
+
+    public async onDeleteCoursesButtonPress(): Promise<void> {
+        const table = this.getCurrentView().byId("idUserCoursesTable") as Table;
+        try {
+            await this.oDataDeleteHelper.deleteUserCourses(table);
+            MessageToast.show("Courses deleted successfully");
+        } catch (error) {
+            console.error("❌", error);
+            MessageToast.show("Error deleting courses");
+        }
+
+    }
+
 
 }

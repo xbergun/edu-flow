@@ -4,7 +4,7 @@ annotate ef.UserCourses with {
     course @Common.ValueList : {
         $Type: 'Common.ValueListType',
         Label: 'Select Course',
-        CollectionPath: 'Courses',
+        CollectionPath: 'VHCourses',
         Parameters: [
             {
                 $Type: 'Common.ValueListParameterOut',
@@ -17,4 +17,4 @@ annotate ef.UserCourses with {
             }
         ]
     };
-};
+};      
