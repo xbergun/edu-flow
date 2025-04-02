@@ -73,16 +73,14 @@ export default class DialogBuilder extends ManagedObject {
                 beginButton: new Button({
                     text: "Add",
                     press: () => {
-                        oDataModel.submitChanges({
-                            success: () => {
-                                const data = bindingContext.getObject() as IUserCoursesForm;
-                                dialog.close();
-                                resolve(data);
-                            },
-                            error: () => {
-                                MessageToast.show("Save failed.");
-                            }
-                        });
+                        const data = bindingContext.getObject() as IUserCoursesForm;
+    
+                        if (!data.course_ID) {
+                            MessageToast.show("Please select a course.");
+                            return;
+                        }
+                        dialog.close();
+                        resolve(data);
                     }
                 }),
                 endButton: new Button({
