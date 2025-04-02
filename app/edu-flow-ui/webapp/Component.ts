@@ -27,6 +27,12 @@ export default class Component extends BaseComponent {
         const loggedInUserModel = new JSONModel();
         this.setModel(loggedInUserModel, "loggedInUser");
 
+        const currentCreditsModel = new JSONModel({
+            currentCredits: 0,
+            maxCredits: 0
+        });
+        this.setModel(currentCreditsModel, "currentCredits");
+
         this.fetchAuth0Keys();
 
         // enable routing

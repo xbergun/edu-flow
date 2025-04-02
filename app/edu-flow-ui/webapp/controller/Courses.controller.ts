@@ -31,16 +31,20 @@ export default class Courses extends BaseController {
     public onInit(): void {
         const model = (this.getOwnerComponent() as Component).getModel() as ODataModel;
         const user = this.getLoggedInUserData();
+
         this.auth0_Id = user.Auth0Id;
         this.programName = user.ProgramName;
 
-        console.log("Auth0 ID:", this.auth0_Id);
         const view = this.getCurrentView();
         this.dialogBuilder = new DialogBuilder(view);
         this.oDataDeleteHelper = new DeleteHelper(model);
         this.oDataCreateHelper = new CreateHelper(model);
         this.smartTable = this.byId("stCourses") as SmartTable;
         this.setCoursesBinding();
+    }
+
+    private onLogoutButtonPress(): void {
+        return this.onLogOutButtonPress();
     }
 
     private setCoursesBinding(): void {

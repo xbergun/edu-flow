@@ -65,6 +65,14 @@ import JSONModel from "sap/ui/model/json/JSONModel";
     public getLoggedInUserData(): IAuth0User {
         return this.getLoggedInUserModel().getData() as IAuth0User;
     }
+
+    public onLogOutButtonPress(): void {
+        this.getRouter().navTo("RouteLogin", {}, true);
+        this.getLoggedInUserModel().setData({} as IAuth0User);
+        this.getLoggedInUserModel().refresh(true);
+        this.getODataModel().refresh(true);
+        this.getComponentModel().refresh(true);
+    }
     
 
 } 

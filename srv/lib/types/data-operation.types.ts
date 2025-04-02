@@ -37,3 +37,8 @@ export interface IDepartments {
     Name : string;
     MaxCredit: number;
 }
+
+export interface ICredits {
+    currentCredits: number;
+    maxCredits: number;
+}

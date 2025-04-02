@@ -65,4 +65,20 @@ export default class SmartformBuilder extends ManagedObject {
         smartForm.bindElement("/");
         return smartForm;
     }
+
+    public registerNewCourseForm(model: JSONModel): SmartForm {
+        const smartForm = new SmartForm({
+            editable: true,
+            layout: new ColumnLayout(),
+            groups: [
+                
+            ]
+        });
+    
+        smartForm.setModel(model);
+        smartForm.bindElement("/");
+        return smartForm;
+    }
+
+
 }

@@ -20,4 +20,11 @@ service EduFlowService {
         redirectUri : String;
     };
 
+    function getCurrentCreditsByStudent(
+        auth0_ID : String
+    ) returns {
+        currentCredits : Integer;
+        maxCredits : Integer;
+    };
+
 }

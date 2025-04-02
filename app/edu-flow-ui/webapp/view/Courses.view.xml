@@ -11,6 +11,12 @@
         title="{i18n>courses}"
         titleAlignment="Center"
     >
+        <headerContent>
+            <Button
+                icon="sap-icon://log"
+                press="onLogoutButtonPress"
+            />
+        </headerContent>
         <FlexBox
             justifyContent="Center"
             alignItems="Center"

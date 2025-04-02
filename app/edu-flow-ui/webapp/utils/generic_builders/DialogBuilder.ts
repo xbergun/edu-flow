@@ -16,7 +16,7 @@ import GroupElement from "sap/ui/comp/smartform/GroupElement";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import MessageToast from "sap/m/MessageToast";
 import ColumnLayout from "sap/ui/comp/smartform/ColumnLayout";
-import { ICourses } from './../../types/courses.types';
+import { ICourses, IUserCourses } from './../../types/courses.types';
 import SmartformBuilder from "./SmartformBuilder";
 
 
@@ -45,6 +45,50 @@ export default class DialogBuilder extends ManagedObject {
                     resolve(action === MessageBox.Action.OK);
                 }
             });
+        });
+    }
+
+    public addNewCourseByUserDialog(): Promise<IUserCourses | null> {
+
+        return new Promise((resolve) => {
+    
+            const tempModel = new JSONModel({
+                name: "",
+                credits: 0,
+                capacity: 0,
+                absenceLimit: 0
+            });    
+            
+            const smartForm = this.smartFormBuilder.registerNewCourseForm(tempModel);
+
+            const dialog = new Dialog({
+                title: "Register New Course",
+                contentWidth: "400px",
+                content: [smartForm],
+                beginButton: new Button({
+                    text: "Add",
+                    press: () => {
+                        const formData = tempModel.getData();
+    
+                        if (!formData?.name) {
+                            MessageToast.show("All fields are required.");
+                            return;
+                        }
+                        dialog.close();
+                        resolve(formData);
+                    }
+                }),
+                endButton: new Button({
+                    text: "Cancel",
+                    press: () => {
+                        dialog.close();
+                        resolve(null);
+                    }
+                })
+            });
+    
+            this.view.addDependent(dialog);
+            dialog.open();
         });
     }
 

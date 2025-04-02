@@ -115,10 +115,16 @@
                             >
                                 <m:headerToolbar>
                                     <m:Toolbar>
+                                        <m:VBox>
+                                            <m:Text
+                                                text="Credits: {currentCredits>/currentCredits} / {currentCredits>/maxCredits}"
+                                            />
+                                        </m:VBox>
+
                                         <m:ToolbarSpacer />
                                         <m:Button
                                             icon="sap-icon://add"
-                                            press="onAddProductSpecies"
+                                            press="onAddCourseButtonPress"
                                             text="Add"
                                         />
                                         <m:Button
@@ -138,7 +144,7 @@
                                     <m:Column>
                                         <m:Text text="My Absence" />
                                     </m:Column>
-                                     <m:Column>
+                                    <m:Column>
                                         <m:Text text="Absence Limit" />
                                     </m:Column>
                                     <m:Column>

@@ -9,6 +9,7 @@ export enum ApplicationModels {
     I18N = "i18n",
     AUTH0 = "auth0",
     LOGGED_USER= "loggedInUser",
+    CREDITS = "currentCredits"
 }
 
 export enum DefaultMessages {
@@ -56,4 +57,9 @@ export interface IAuth0User {
     ProgramName: string;
     DepartmentName: string;
     IsTeacher: boolean;
+}
+
+export interface ICredits {
+    currentCredits: number;
+    maxCredits: number;
 }

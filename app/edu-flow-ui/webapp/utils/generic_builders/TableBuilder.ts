@@ -33,31 +33,32 @@ export default class TableBuilder extends ManagedObject {
     }
 
 
-    public bindUserCourses(path: string, auth0Id: string): void {
+    public async bindUserCourses(path: string, auth0Id: string): Promise<void> {
+        return new Promise((resolve) => {
+            const table = this.view.byId("idUserCoursesTable") as Table;
 
-        const table = this.view.byId("idUserCoursesTable") as Table;
-
-
-        const filter = new Filter("user_auth0_ID", FilterOperator.EQ, auth0Id);
-        table.unbindAggregation("items", true);
-        table.bindAggregation("items", {
-            path: "/UserCourses",
-            filters: [filter],
-            parameters: {
-                expand: "user,course,course/to_Teacher"
-            },
-            template: new ColumnListItem({
-                cells: [
-                    new Text({ text: "{course/name}" }),
-                    new Text({ text: "{course/credits}" }),
-                    new Text({ text: "{absenceCount}" }),
-                    new Text({ text: "{course/absenceLimit}" }),
-                    new Text({ text: "{course/to_Teacher/name}" }),
-                    new Text({ text: "{letterGrade}" })
-                ]
-            })
-        });
-
+            const filter = new Filter("user_auth0_ID", FilterOperator.EQ, auth0Id);
+            table.unbindAggregation("items", true);
+            table.bindAggregation("items", {
+                path: "/UserCourses",
+                filters: [filter],
+                parameters: {
+                    expand: "user,course,course/to_Teacher"
+                },
+                template: new ColumnListItem({
+                    cells: [
+                        new Text({ text: "{course/name}" }),
+                        new Text({ text: "{course/credits}" }),
+                        new Text({ text: "{absenceCount}" }),
+                        new Text({ text: "{course/absenceLimit}" }),
+                        new Text({ text: "{course/to_Teacher/name}" }),
+                        new Text({ text: "{letterGrade}" })
+                    ]
+                })
+            });
+            resolve();
+        }
+        );
     }
 
 
