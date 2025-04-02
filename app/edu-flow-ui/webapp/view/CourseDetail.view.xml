@@ -1,6 +1,7 @@
 <mvc:View
     controllerName="eduflowui.controller.CourseDetail"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartchart="sap.ui.comp.smartchart"
     xmlns="sap.uxap"
     xmlns:m="sap.m"
     xmlns:smartForm="sap.ui.comp.smartform"
@@ -9,93 +10,54 @@
     height="100%"
     busyIndicatorDelay="0"
 >
-    <!-- <ObjectPageLayout id="idObjectPageLayout">
+    <ObjectPageLayout id="idObjectPageLayoutCourseDetail">
         <headerTitle>
-            <ObjectPageDynamicHeaderTitle>
-                <expandedHeading>
-                    <m:Button
-                        press="onNavBack"
-                        type="Up"
-                    />
-                </expandedHeading>
+            <ObjectPageHeader>
                 <actions>
                     <m:Button
-                        press="onSaveButtonPress"
-                        text="{i18n>save}"
                         icon="sap-icon://save"
-                        type="Accept"
+                        text="Save"
+                        type="Emphasized"
+                        press=".onSaveChangesButtonPress"
                     />
                 </actions>
-            </ObjectPageDynamicHeaderTitle>
+            </ObjectPageHeader>
         </headerTitle>
+
         <sections>
-            <ObjectPageSection title="Course Detail">
+            <ObjectPageSection title="My Courses">
                 <ObjectPageSubSection>
                     <blocks>
-                        <m:VBox width="95%">
-                            <smartForm:SmartForm
-                                id="idSmartFormEUDRAttributes"
-                                editable="true"
+                        <m:VBox width="100%">
+                            <m:Table
+                                id="idCourseUsersTable"
+                                mode="MultiSelect"
+                                items="{/UserCourses}"
                             >
-                                <smartForm:layout>
-                                    <smartForm:ColumnLayout
-                                        columnsM="3"
-                                        columnsL="3"
-                                        columnsXL="3"
-                                    />
-                                </smartForm:layout>
-                            </smartForm:SmartForm>
-                            <smartForm:SmartForm
-                                id="idSmartFormPurchaseOrder"
-                                editable="true"
-                                binding="{attributeStatus>/}"
-                            >
-                                <smartForm:layout>
-                                    <smartForm:ColumnLayout
-                                        columnsM="3"
-                                        columnsL="3"
-                                        columnsXL="3"
-                                    />
-                                </smartForm:layout>
-                                <smartForm:Group>
-                                    <smartForm:GroupElement>
-                                        <m:ObjectStatus
-                                            title="{i18n>status}"
-                                            text="{attributeStatus>/Status}"
-                                            state="{path: 'attributeStatus>/Status', formatter:'.formatter.formatStatus'}"
-                                            icon="{path: 'attributeStatus>/Status', formatter:'.formatter.formatStatusIcon'}"
-                                            inverted="true"
-                                        />
-                                    </smartForm:GroupElement>
-                                    <smartForm:GroupElement>
-                                        <m:Input
-                                            value="{attributeStatus>/ProductDescription}"
-                                            editable="false"
-                                        />
-                                    </smartForm:GroupElement>
-                                </smartForm:Group>
-                            </smartForm:SmartForm>
-
-                            <smartForm:SmartForm
-                                id="idSmartFormComment"
-                                editable="true"
-                                binding="{comment>/}"
-                            >
-                                <smartForm:layout>
-                                    <smartForm:ColumnLayout
-                                        columnsM="3"
-                                        columnsL="3"
-                                        columnsXL="3"
-                                    />
-                                </smartForm:layout>
-                                <smartForm:Group>
-
-                                </smartForm:Group>
-                            </smartForm:SmartForm>
+                                <m:columns>
+                                    <m:Column>
+                                        <m:Text text="Student Name" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Course Credit" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Student Absence" />
+                                    </m:Column>
+                                    <m:Column>
+                                        <m:Text text="Student Letter Grade" />
+                                    </m:Column>
+                                </m:columns>
+                                <m:items>
+                                    <m:ColumnListItem>
+                                        <m:cells />
+                                    </m:ColumnListItem>
+                                </m:items>
+                            </m:Table>
                         </m:VBox>
                     </blocks>
                 </ObjectPageSubSection>
             </ObjectPageSection>
         </sections>
-    </ObjectPageLayout> -->
+    </ObjectPageLayout>
 </mvc:View>

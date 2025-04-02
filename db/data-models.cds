@@ -47,3 +47,13 @@ entity UserCourses {
             absenceCount   : Integer;
             enrollmentDate : Timestamp;
 }
+
+view CourseRegistrations as
+        select from UserCourses {
+                key course.ID     as courseId          : UUID,
+                    course.name   as courseName        : String(100),
+                    count(ID)     as registrationCount : Integer
+        }
+        group by
+                course.ID,
+                course.name;

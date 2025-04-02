@@ -61,5 +61,31 @@ export default class TableBuilder extends ManagedObject {
         );
     }
 
+    public async bindCourseUsers(courseId: string): Promise<void> {
+        return new Promise((resolve) => {
+            const table = this.view.byId("idCourseUsersTable") as Table;
+
+            const filter = new Filter("course_ID", FilterOperator.EQ, courseId);
+            table.unbindAggregation("items", true);
+            table.bindAggregation("items", {
+                path: "/UserCourses",
+                filters: [filter],
+                parameters: {
+                    expand: "user,course,course/to_Teacher"
+                },
+                template: new ColumnListItem({
+                    cells: [
+                        new Text({ text: "{user/name}" }),
+                        new Text({ text: "{course/credits}" }),
+                        new Input({ value: "{absenceCount}", editable: true, type: "Number" }),
+                        new Input({ value: "{letterGrade}", editable: true }),
+                    ]
+                })
+            });
+            resolve();
+        }
+        );
+    }
+
 
 }

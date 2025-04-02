@@ -1,6 +1,7 @@
 <mvc:View
     controllerName="eduflowui.controller.Dashboard"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartchart="sap.ui.comp.smartchart"
     xmlns="sap.uxap"
     xmlns:m="sap.m"
     xmlns:smartForm="sap.ui.comp.smartform"
@@ -160,6 +161,35 @@
                                     </m:ColumnListItem>
                                 </m:items>
                             </m:Table>
+                        </m:VBox>
+                    </blocks>
+                </ObjectPageSubSection>
+            </ObjectPageSection>
+            <ObjectPageSection title="Chart">
+                <ObjectPageSubSection>
+                    <blocks>
+                        <m:VBox width="100%">
+                            <smartchart:SmartChart
+                                enableAutoBinding="true"
+                                toolbarStyle="Clear"
+                                entitySet="CourseRegistrations"
+                                useVariantManagement="false"
+                                header="Registration Chart"
+                                showFullScreenButton="false"
+                                selectionMode="Multi"
+                                showDimensionsTitle="false"
+                                showMeasuresTitle="false"
+                                showChartTooltip="true"
+                                showDrillBreadcrumbs="false"
+                                showDetailsButton="true"
+                                showDrillButtons="true"
+                                showLegendButton="false"
+                                showZoomButtons="false"
+                                showChartTypeSelectionButton="false"
+                                useChartPersonalisation="false"
+                                showSemanticNavigationButton="true"
+                                legendVisible="true"
+                            />
                         </m:VBox>
                     </blocks>
                 </ObjectPageSubSection>

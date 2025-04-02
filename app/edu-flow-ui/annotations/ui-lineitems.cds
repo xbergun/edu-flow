@@ -83,3 +83,22 @@ annotate ef.UserCourses with @UI :{
         enrollmentDate
     ],
 };
+
+annotate ef.CourseRegistrations with @UI :{
+    Chart  : {
+        $Type : 'UI.ChartDefinitionType',
+        ChartType : #Column,
+        Title : 'Course Registrations',
+        Description : 'Number of students registered for each course',
+        Dimensions : [
+            courseName
+        ],
+        Measures : [
+            registrationCount
+        ],
+    },
+    LineItem  : [
+        {Value: courseName},
+        {Value: registrationCount}
+    ],
+};
