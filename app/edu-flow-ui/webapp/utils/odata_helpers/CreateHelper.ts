@@ -1,7 +1,6 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import ODataModel from "sap/ui/model/odata/v2/ODataModel";
 import MessageToast from "sap/m/MessageToast";
-import Table from "sap/m/Table";
 import { IAuth0User, IResponseV2 } from "../../types/global.types";
 import Filter from 'sap/ui/model/Filter';
 import FilterOperator from 'sap/ui/model/FilterOperator';
@@ -113,4 +112,14 @@ export default class CreateHelper extends ManagedObject {
         );
     }
 
+    public addNewUserCourse = (formData: { course_ID: string }, auth0_ID: string): Promise<string | boolean> => {
+        const newData = {
+            course_ID: formData.course_ID,
+            user_auth0_ID: auth0_ID,
+            absenceCount: 0,
+            letterGrade: "",
+            enrollmentDate: new Date().toISOString(),
+        }
+        return this.createEntity("/UserCourses", newData, "New course registered.");
+    }
 }

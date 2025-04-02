@@ -54,9 +54,9 @@ export default class Courses extends BaseController {
 
         const oDataModel = component.getModel() as ODataModel;
         oDataModel.setHeaders({
-            "x-auth0-id": user.Auth0Id 
+            "x-auth0-id": user.Auth0Id
         });
-    
+
         smartTable.attachBeforeRebindTable((Event: SmartTable$BeforeRebindTableEvent) => {
             const bindingParams = Event.getParameter("bindingParams") as { filters: Filter[] };
             if (bindingParams) {
@@ -64,13 +64,11 @@ export default class Courses extends BaseController {
                 bindingParams.filters.push(filter);
             }
         });
-    
+
         smartTable.attachEventOnce("initialise", () => {
             smartTable.rebindTable(true);
         });
-
     }
-
 
     public onColumnListItemPress(event: Event<ListItemBase$PressEventParameters, ColumnListItem>) {
         const courseParams = ((event.getSource() as ListItemBase).getBindingContext() as Context).getObject() as { ID: string, name: string };
@@ -83,22 +81,22 @@ export default class Courses extends BaseController {
 
     public async onAddCourseButtonPress(): Promise<void> {
         const formData = await this.dialogBuilder.addNewCourseDialog();
-    
+
         if (!formData) {
             return;
         }
-    
+
         try {
-            await this.oDataCreateHelper.createCourse(formData, this.auth0_Id, this.programName).finally(() => { 
+            await this.oDataCreateHelper.createCourse(formData, this.auth0_Id, this.programName).finally(() => {
                 this.smartTable.rebindTable(true);
             });
-    
+
         } catch (error) {
             console.error("Unexpected error while creating course:", error);
         }
     }
-    
-    public async onDeleteCourseButtonPress (event: Event): Promise<void> {
+
+    public async onDeleteCourseButtonPress(event: Event): Promise<void> {
         const table = this.getCurrentView().byId("idCoursesTable") as Table;
         try {
             await this.oDataDeleteHelper.deleteCourses(table);
@@ -107,4 +105,3 @@ export default class Courses extends BaseController {
         }
     }
 }
-    

@@ -22,7 +22,7 @@ service EduFlowService {
         capacity,
         absenceLimit,
         to_Program.name as programName,
-        to_Teacher.name as teacherName
+        to_Teacher.name as teacherName,
     };
     
     function getAuth0Keys()                 returns {

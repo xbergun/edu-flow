@@ -9,6 +9,7 @@ import Component from "eduflowui/Component";
 import TableBuilder from "eduflowui/utils/generic_builders/TableBuilder";
 import DialogBuilder from "eduflowui/utils/generic_builders/DialogBuilder";
 import DeleteHelper from "eduflowui/utils/odata_helpers/DeleteHelper";
+import CreateHelper from "eduflowui/utils/odata_helpers/CreateHelper";
 /**
  * @namespace eduflowui.controller
  */
@@ -17,6 +18,7 @@ export default class Dashboard extends BaseController {
     private tableBuilder!: TableBuilder;
     private dialogBuilder!: DialogBuilder;
     private oDataDeleteHelper!: DeleteHelper;
+    private oDataCreateHelper!: CreateHelper;
     private model!: ODataModel;
 
     /*eslint-disable @typescript-eslint/no-empty-function*/
@@ -30,7 +32,7 @@ export default class Dashboard extends BaseController {
         this.tableBuilder = new TableBuilder(view, model);
         this.dialogBuilder = new DialogBuilder(view);
         this.oDataDeleteHelper = new DeleteHelper(model);
-
+        this.oDataCreateHelper = new CreateHelper(model);
         this.bindUserCourses()
     }
 
@@ -62,21 +64,36 @@ export default class Dashboard extends BaseController {
 
     }
 
+
     public async onAddCourseButtonPress(): Promise<void> {
+
         const formData = await this.dialogBuilder.addNewCourseByUserDialog();
+
+        if (formData) {
+            try {
+                await this.oDataCreateHelper.addNewUserCourse(formData, this.auth0_Id).then(() => {
+                    this.bindUserCourses();
+                    MessageToast.show("Course added successfully");
+                });
+            } catch (error) {
+                console.error("❌", error);
+                MessageToast.show("Error adding course");
+            }
+        }
     }
 
     public async onDeleteCoursesButtonPress(): Promise<void> {
         const table = this.getCurrentView().byId("idUserCoursesTable") as Table;
         try {
-            await this.oDataDeleteHelper.deleteUserCourses(table);
-            MessageToast.show("Courses deleted successfully");
+            await this.oDataDeleteHelper.deleteUserCourses(table).then(() => {
+                this.bindCurrentCredits();
+                MessageToast.show("Courses deleted successfully");
+            });
         } catch (error) {
             console.error("❌", error);
             MessageToast.show("Error deleting courses");
         }
 
     }
-
 
 }

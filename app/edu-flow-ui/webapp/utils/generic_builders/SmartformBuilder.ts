@@ -15,6 +15,7 @@ import VBox from "sap/m/VBox";
 import MessageToast from "sap/m/MessageToast";
 import { InputBase$ChangeEvent } from "sap/m/InputBase";
 import JSONModel from "sap/ui/model/json/JSONModel";
+import Context from "sap/ui/model/odata/v2/Context";
 
 /**
  * @namespace eduflowui.utils.generic_builders
@@ -66,17 +67,29 @@ export default class SmartformBuilder extends ManagedObject {
         return smartForm;
     }
 
-    public registerNewCourseForm(model: JSONModel): SmartForm {
+    public registerNewCourseForm(model: ODataModel, context: Context): SmartForm {
         const smartForm = new SmartForm({
             editable: true,
             layout: new ColumnLayout(),
             groups: [
-                
+                new Group({
+                    groupElements: [
+                        new GroupElement({
+                            elements: [
+                                new SmartField({
+                                    value: "{course_ID}",
+                                    editable: true,
+                                    textLabel: "Select Course"
+                                })
+                            ]
+                        })
+                    ]
+                })
             ]
         });
     
         smartForm.setModel(model);
-        smartForm.bindElement("/");
+        smartForm.setBindingContext(context);
         return smartForm;
     }
 

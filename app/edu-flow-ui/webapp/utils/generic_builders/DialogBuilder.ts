@@ -18,6 +18,8 @@ import MessageToast from "sap/m/MessageToast";
 import ColumnLayout from "sap/ui/comp/smartform/ColumnLayout";
 import { ICourses, IUserCourses } from './../../types/courses.types';
 import SmartformBuilder from "./SmartformBuilder";
+import Context from "sap/ui/model/Context";
+import { IUserCoursesForm } from "eduflowui/types/global.types";
 
 
 /**
@@ -48,19 +50,22 @@ export default class DialogBuilder extends ManagedObject {
         });
     }
 
-    public addNewCourseByUserDialog(): Promise<IUserCourses | null> {
-
+    public addNewCourseByUserDialog(): Promise<IUserCoursesForm | null> {
         return new Promise((resolve) => {
     
-            const tempModel = new JSONModel({
-                name: "",
-                credits: 0,
-                capacity: 0,
-                absenceLimit: 0
-            });    
-            
-            const smartForm = this.smartFormBuilder.registerNewCourseForm(tempModel);
-
+            const oDataModel = this.view.getModel() as ODataModel;
+    
+            const bindingContext = oDataModel.createEntry("/UserCourses", {
+                properties: {
+                    course_ID: ""
+                }
+            });
+    
+            if (!bindingContext) {
+                throw new Error("Binding context is undefined.");
+            }
+            const smartForm = this.smartFormBuilder.registerNewCourseForm(oDataModel, bindingContext);
+    
             const dialog = new Dialog({
                 title: "Register New Course",
                 contentWidth: "400px",
@@ -68,19 +73,22 @@ export default class DialogBuilder extends ManagedObject {
                 beginButton: new Button({
                     text: "Add",
                     press: () => {
-                        const formData = tempModel.getData();
-    
-                        if (!formData?.name) {
-                            MessageToast.show("All fields are required.");
-                            return;
-                        }
-                        dialog.close();
-                        resolve(formData);
+                        oDataModel.submitChanges({
+                            success: () => {
+                                const data = bindingContext.getObject() as IUserCoursesForm;
+                                dialog.close();
+                                resolve(data);
+                            },
+                            error: () => {
+                                MessageToast.show("Save failed.");
+                            }
+                        });
                     }
                 }),
                 endButton: new Button({
                     text: "Cancel",
                     press: () => {
+                        oDataModel.resetChanges();
                         dialog.close();
                         resolve(null);
                     }
@@ -91,7 +99,7 @@ export default class DialogBuilder extends ManagedObject {
             dialog.open();
         });
     }
-
+    
     public addNewCourseDialog(): Promise<ICourses | null> {
         return new Promise((resolve) => {
     

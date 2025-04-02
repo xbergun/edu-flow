@@ -63,3 +63,7 @@ export interface ICredits {
     currentCredits: number;
     maxCredits: number;
 }
+
+export interface IUserCoursesForm {
+    course_ID: string;
+}
