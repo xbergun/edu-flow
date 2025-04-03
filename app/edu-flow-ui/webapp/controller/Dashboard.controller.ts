@@ -10,6 +10,8 @@ import TableBuilder from "eduflowui/utils/generic_builders/TableBuilder";
 import DialogBuilder from "eduflowui/utils/generic_builders/DialogBuilder";
 import DeleteHelper from "eduflowui/utils/odata_helpers/DeleteHelper";
 import CreateHelper from "eduflowui/utils/odata_helpers/CreateHelper";
+import Filter from 'sap/ui/model/Filter';
+import ReadHelper from "eduflowui/utils/odata_helpers/ReadHelper";
 /**
  * @namespace eduflowui.controller
  */
@@ -19,6 +21,7 @@ export default class Dashboard extends BaseController {
     private dialogBuilder!: DialogBuilder;
     private oDataDeleteHelper!: DeleteHelper;
     private oDataCreateHelper!: CreateHelper;
+    private oDataReadHelper!: ReadHelper;
     private model!: ODataModel;
 
     /*eslint-disable @typescript-eslint/no-empty-function*/
@@ -33,6 +36,7 @@ export default class Dashboard extends BaseController {
         this.dialogBuilder = new DialogBuilder(view);
         this.oDataDeleteHelper = new DeleteHelper(model);
         this.oDataCreateHelper = new CreateHelper(model);
+        this.oDataReadHelper = new ReadHelper(model);
         this.bindUserCourses()
     }
 
@@ -71,16 +75,34 @@ export default class Dashboard extends BaseController {
 
         if (formData) {
             try {
-                await this.oDataCreateHelper.addNewUserCourse(formData, this.auth0_Id).then(() => {
-                    this.bindUserCourses();
-                    MessageToast.show("Course added successfully");
-                });
-            } catch (error) {
+                await this.checkCurrentCredits(formData.course_ID);
+                await this.oDataCreateHelper.addNewUserCourse(formData, this.auth0_Id);
+                this.bindUserCourses();
+                MessageToast.show("Course added successfully");
+            } catch (error: Error | any) {
                 console.error("❌", error);
-                MessageToast.show("Error adding course");
+                MessageToast.show(error.message || "Error adding course");
             }
         }
     }
+
+    private async checkCurrentCredits(course_ID: string): Promise<void> {
+        const currentCreditsModel = this.getOwnerComponent()?.getModel("currentCredits") as JSONModel;
+        const currentCredits = currentCreditsModel.getData() as ICredits;
+
+        const path = `/VHCourses(ID=guid'${course_ID}')`;
+
+        const course = await this.oDataReadHelper.readAsync(path);
+
+        const courseCredit = course.credits;
+
+        if (currentCredits.currentCredits + courseCredit > currentCredits.maxCredits) {
+            throw new Error("Maximum credits exceeded");
+        }
+    }
+
+
+
 
     public async onDeleteCoursesButtonPress(): Promise<void> {
         const table = this.getCurrentView().byId("idUserCoursesTable") as Table;

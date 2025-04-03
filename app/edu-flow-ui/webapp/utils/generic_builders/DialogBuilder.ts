@@ -1,24 +1,13 @@
 import ManagedObject from "sap/ui/base/ManagedObject";
 import Dialog from "sap/m/Dialog";
 import Button from "sap/m/Button";
-import Select from "sap/m/Select";
-import TextArea from "sap/m/TextArea";
-import Item from "sap/ui/core/Item";
 import MessageBox from "sap/m/MessageBox";
 import View from "sap/ui/core/mvc/View";
 import ODataModel from "sap/ui/model/odata/v2/ODataModel";
-import HTML from "sap/ui/core/HTML";
-import SmartForm from "sap/ui/comp/smartform/SmartForm";
-import SmartField from "sap/ui/comp/smartfield/SmartField";
-import Label from "sap/m/Label";
-import Group from "sap/ui/comp/smartform/Group";
-import GroupElement from "sap/ui/comp/smartform/GroupElement";
 import JSONModel from "sap/ui/model/json/JSONModel";
 import MessageToast from "sap/m/MessageToast";
-import ColumnLayout from "sap/ui/comp/smartform/ColumnLayout";
-import { ICourses, IUserCourses } from './../../types/courses.types';
+import { ICourses } from './../../types/courses.types';
 import SmartformBuilder from "./SmartformBuilder";
-import Context from "sap/ui/model/Context";
 import { IUserCoursesForm } from "eduflowui/types/global.types";
 
 
