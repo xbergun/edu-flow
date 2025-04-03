@@ -62,7 +62,6 @@ export default class Callback extends BaseController {
       
       }).catch((error) => {
         MessageToast.show("Error creating user.");
-        console.log("Error creating user:", error);
         this.getRouter().navTo(Routes.LOGIN);
       });
     }

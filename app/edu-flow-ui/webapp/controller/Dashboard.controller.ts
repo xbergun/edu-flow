@@ -58,7 +58,6 @@ export default class Dashboard extends BaseController {
                 auth0_ID: this.auth0_Id
             },
             success: (data: { getCurrentCreditsByStudent: ICredits }) => {
-                console.log("✅", data.getCurrentCreditsByStudent);
                 currentCreditsModel.setData(data.getCurrentCreditsByStudent);
             },
             error: (error: any) => {
